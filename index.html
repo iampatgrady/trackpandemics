@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Collect and warehouse vitals to inform pandemic response strategy.">
+  <meta name="author" content="Pat Grady">
+
+  <!-- favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <title>Track Pandemics - Supporting Pandemic Research</title>
+  <script>
+    window.formSubmit = false;
+    window.addEventListener("unload", function logData() {
+
+    if (formSubmit == true) {
+      var d = new Object();
+      d.location = document.getElementById('map-link').value;
+      d.uom = document.getElementById('uom-f').checked;
+      d.temp = document.getElementById('temp').value;
+      d.heart = document.getElementById('heartrate').value
+      d.o2 = document.getElementById('o2').value;
+
+      var elem = document.createElement("img");
+      elem.setAttribute("src",
+            "https://www.trackpandemics.com/p.gif?"
+            + "loc=" + d.location
+            + "&uom=" + d.uom
+            + "&temp=" + d.temp
+            + "&heart=" + d.heart
+            + "&o2=" + d.o2
+            );
+      elem.setAttribute("height", "1");
+      elem.setAttribute("width", "1");
+      document.body.appendChild(elem);
+    }
+  });
+
+  (function() {
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          formSubmit=true;
+          if (form.checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+            formSubmit=false;
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    }, false);
+  }());
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  function geoFindMe() {
+
+    const status = document.querySelector('#status');
+    const mapLink = document.querySelector('#map-link');
+
+
+    var geo_options = {
+      enableHighAccuracy: false,
+      maximumAge: 1e6,
+      timeout: 5000
+    };
+
+    function success(position) {
+      // TODO - improve GEO anonymization
+      var r1 = getRandomInt(-5, 5) / 100; // jitter
+      var r2 = getRandomInt(-5, 5) / 100;
+      const latitude = Math.round((position.coords.latitude + r1) * 100) / 100; // bucketize
+      const longitude = Math.round((position.coords.longitude + r2) * 100) / 100;
+
+      mapLink.value = `${latitude},${longitude}`;
+    }
+
+    function error() {
+      mapLink.placeholder = 'Unable to retrieve your location';
+    }
+
+    if (!navigator.geolocation) {
+      status.textContent = 'Geolocation is not supported by your browser';
+    } else {
+      mapLink.placeholder = 'Locating…';
+      navigator.geolocation.getCurrentPosition(success, error, geo_options);
+    }
+
+  }
+</script>
+</head>
+
+<body class="bg-light">
+  <div class="container">
+
+    <div class="py-5 text-center">
+      <img class="d-block mx-auto mb-4" src="/trackpandemics_logo.png" alt="" width="96" height="96">
+      <h2>Help Track Pandemics</h2>
+      <p class="lead">This project supports pandemic research by warehousing anonymized vitals.</p>
+    </div>
+
+
+    <div class="col">
+      <h4 class="mb-3">Enter Vitals</h4>
+      <form class="needs-validation" novalidate action="/thanks.html">
+        <div class="row">
+
+          <div class="input-group col-md-auto mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text" id="find-me">📌</div>
+            </div>
+            <input type="text" class="form-control" id="map-link" placeholder="Approximate Location" value="" readonly>
+          </div>
+
+          <div class="input-group col-md-auto mb-3">
+            <div class="input-group-prepend">
+              <label class="btn btn-primary">
+                <input id="uom-f" type="radio" name="uom" checked>F°</input>
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="uom">C°</input>
+              </label>
+            </div>
+            <input type="text" class="form-control" placeholder="Temperature" id="temp" required>
+            <div class="invalid-feedback">
+              Valid temperature is required.
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-auto mb-3">
+            <input type="text" class="form-control" id="heartrate" placeholder="Heart Rate in BPM" value="">
+          </div>
+          <div class="col-md-auto mb-3">
+            <input type="text" class="form-control" id="o2" placeholder="Oxygen Saturation %" value="">
+          </div>
+
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="tos" name="tos" required>
+          <label class="form-check-label" for="tos">Agree to <a href="https://www.termsfeed.com/terms-conditions/30ce29fdd25da9246070a2632da0af8d">terms of service</a>.</label>
+        </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit Vitals</button>
+      </form>
+    </div>
+
+    <hr class="mb-2">
+    <div class="py5 text-center">
+      <p class="d-none d-sm-block">This open source project will soon encourage pull requests. We're looking for sponsorship to manage CDN and Load Balancing costs.</p>
+      <p class="d-none d-sm-block">This data will be publically available in BigQuery. We use an architecture inspired by this serverless pixel service:</p>
+      <p class="d-none d-sm-block"><a target="_blank" href="https://cloud.google.com/solutions/serverless-pixel-tracking">https://cloud.google.com/solutions/serverless-pixel-tracking</a></p>
+    </div>
+    <hr class="mb-2 d-none d-sm-block">
+  </div>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <ul class="list-inline">
+      <li class="list-inline-item">2020 | contribute</li>
+    </ul>
+  </footer>
+  <script>
+    document.querySelector('#find-me').addEventListener('click', geoFindMe);
+  </script>
+
+</body>
+
+</html>
