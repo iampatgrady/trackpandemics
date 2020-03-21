@@ -1,5 +1,3 @@
 steps:
-- name: gcr.io/cloud-builders/git
-  args: ['clone', 'https://github.com/iampatgrady/trackpandemics.git']
 - name: gcr.io/cloud-builders/gsutil
   args: ['-m','cp', '*.*', 'gs://pandemic-tracker']
