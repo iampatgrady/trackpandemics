@@ -1,4 +1,4 @@
-![Track Pandemics](https://www.trackpandemics.com/trackpandemics_logo.png | width=150)
+<img src="https://www.trackpandemics.com/trackpandemics_logo.png" width="150"/>
 # Track Pandemics
 This project supports pandemic research by warehousing anonymized vitals.  
 
