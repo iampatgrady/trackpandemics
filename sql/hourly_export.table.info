@@ -1,0 +1,18 @@
+Table pandemic-tracker:public.hourly_export
+
+   Last modified                  Schema                 Total Rows   Total Bytes   Expiration     Time Partitioning      Clustered Fields   Labels  
+ ----------------- ------------------------------------ ------------ ------------- ------------ ------------------------ ------------------ -------- 
+  21 Mar 21:37:15   |- timestamp: timestamp (required)   19           2906                       DAY (field: timestamp)                              
+                    |- receiveTimestamp: timestamp                                                                                                   
+                    |- requestSize: integer                                                                                                          
+                    |- responseSize: integer                                                                                                         
+                    |- ip_hash: bytes                                                                                                                
+                    |- cacheHit: boolean                                                                                                             
+                    |- isFahrenheit: boolean                                                                                                         
+                    |- temperature: string                                                                                                           
+                    |- heartrate: string                                                                                                             
+                    |- oxygen_saturation: string                                                                                                     
+                    |- long: numeric                                                                                                                 
+                    |- lat: numeric                                                                                                                  
+                    |- geopoint: geography                                                                                                           
+

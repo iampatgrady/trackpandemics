@@ -84,8 +84,8 @@
       // TODO - improve GEO anonymization
       var r1 = getRandomInt(-5, 5) / 100; // jitter
       var r2 = getRandomInt(-5, 5) / 100;
-      const latitude = Math.round((position.coords.latitude + r1) * 100) / 100; // bucketize
-      const longitude = Math.round((position.coords.longitude + r2) * 100) / 100;
+      const latitude = Math.round((position.coords.latitude + r1) * 10) / 10; // bucketize
+      const longitude = Math.round((position.coords.longitude + r2) * 10) / 10;
 
       mapLink.value = `${latitude},${longitude}`;
     }
@@ -107,16 +107,15 @@
 
 <body class="bg-light">
   <div class="container">
-
-    <div class="py-5 text-center">
+    <div class="py-4 text-center">
       <img class="d-block mx-auto mb-4" src="/trackpandemics_logo.png" alt="" width="96" height="96">
       <h2>Help Track Pandemics</h2>
-      <p class="lead">This project supports pandemic research by warehousing anonymized vitals.</p>
+      <p class="lead">This project collects anonymized data for pandemic research.</p>
     </div>
 
 
     <div class="col">
-      <h4 class="mb-3">Enter Vitals</h4>
+      <h4 class="mb-3">Pin Vitals to the Map</h4>
       <form class="needs-validation" novalidate action="/thanks.html">
         <div class="row">
 
@@ -145,26 +144,24 @@
         <div class="row">
 
           <div class="col-md-auto mb-3">
-            <input type="text" class="form-control" id="heartrate" placeholder="Heart Rate in BPM" value="">
+            <input type="text" class="form-control" id="heartrate" placeholder="*Heart Rate in BPM" value="">
           </div>
           <div class="col-md-auto mb-3">
-            <input type="text" class="form-control" id="o2" placeholder="Oxygen Saturation %" value="">
+            <input type="text" class="form-control" id="o2" placeholder="*O2 Saturation" value="">
           </div>
 
         </div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Agree to Terms and Submit</button>
+          <hr class="mb-4">
 
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="tos" name="tos" required>
-          <label class="form-check-label" for="tos">Agree to <a href="https://www.termsfeed.com/terms-conditions/30ce29fdd25da9246070a2632da0af8d">terms of service</a>.</label>
-        </div>
-
-        <hr class="mb-4">
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Submit Vitals</button>
+          <div class="text-center">
+            <p><a href="https://www.termsfeed.com/terms-conditions/30ce29fdd25da9246070a2632da0af8d">Terms of Service</a></p>
+          </div>
       </form>
     </div>
 
-    <hr class="mb-2">
-    <div class="py5 text-center">
+    <hr class="mb-4">
+    <div class="py4 text-center">
       <p class="d-none d-sm-block">This open source project will soon encourage pull requests. We're looking for sponsorship to manage CDN and Load Balancing costs.</p>
       <p class="d-none d-sm-block">This data will be publically available in BigQuery. We use an architecture inspired by this serverless pixel service:</p>
       <p class="d-none d-sm-block"><a target="_blank" href="https://cloud.google.com/solutions/serverless-pixel-tracking">https://cloud.google.com/solutions/serverless-pixel-tracking</a></p>
