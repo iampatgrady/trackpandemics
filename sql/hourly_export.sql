@@ -8,8 +8,7 @@ CREATE TABLE
      cacheHit BOOL,
      isFahrenheit BOOL,
      temperature STRING,
-     heartrate STRING,
-     oxygen_saturation STRING,
+     zipcode STRING,
      long NUMERIC,
      lat NUMERIC,
      geopoint GEOGRAPHY

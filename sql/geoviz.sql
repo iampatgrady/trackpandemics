@@ -1,23 +1,32 @@
+with data as (
+  SELECT
+    f.ip_hash,
+    SAFE_CAST(f.temperature as NUMERIC) as temp,
+    SAFE_CAST(f.heartrate as NUMERIC) as heart,
+    f.long,
+    f.lat,
+    isFahrenheit
+  from  `pandemic-tracker.public.hourly_export` as f
 
---
-select
-	ip_hash,
-	MAX(SAFE_CAST(temperature as NUMERIC)) as temp,
-	MAX(SAFE_CAST(heartrate as NUMERIC)) as heart,
-	ST_GEOGPOINT(AVG(long),AVG(lat)) as geopoint,
-from `pandemic-tracker.public.hourly_export`
-where lat != 0 AND isFahrenheit
-group by ip_hash
-having temp > 85
-UNION ALL
-select
-	ip_hash,
-	MAX((SAFE_CAST(temperature as NUMERIC)* 9/5)+32) as temp, --convert celsius to fahrenheit
-	MAX(SAFE_CAST(heartrate as NUMERIC)) as heart,
-	ST_GEOGPOINT(AVG(long),AVG(lat)) as geopoint,
-from `pandemic-tracker.public.hourly_export`
-where lat != 0 and not isFahrenheit
-group by ip_hash
-having temp < 50;
+), agg as (
+  select
+    ip_hash,
+    ST_GEOGPOINT(AVG(long),AVG(lat)) as geopoint,
+    MAX(temp) as temp,
+    MAX(heart) as heart
+  from data
+  group by 1
+)
 
---
+select
+  ip_hash,
+  geopoint,
+  temp,
+  heart,
+  z.zip_code as zip,
+  z.state_name as state,
+  z.state_code as st_abbr,
+  z.zip_code_geom as zip_geom
+from agg
+inner join  `bigquery-public-data.geo_us_boundaries.zip_codes` as z
+        on ST_COVEREDBY(agg.geopoint,z.zip_code_geom  )

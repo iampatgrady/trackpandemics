@@ -21,11 +21,16 @@
 
     if (formSubmit == true) {
       var d = new Object();
-      d.location = document.getElementById('map-link').value;
+      var mapValue = document.getElementById('map-link').value
+      if (document.getElementById('find-me').checked){
+        d.location = mapValue;
+        d.zip = "";
+      } else {
+        d.location = "";
+        d.zip = mapValue;
+      }
       d.uom = document.getElementById('uom-f').checked;
       d.temp = document.getElementById('temp').value;
-      d.heart = document.getElementById('heartrate').value
-      d.o2 = document.getElementById('o2').value;
 
       var elem = document.createElement("img");
       elem.setAttribute("src",
@@ -33,75 +38,75 @@
             + "loc=" + d.location
             + "&uom=" + d.uom
             + "&temp=" + d.temp
-            + "&heart=" + d.heart
-            + "&o2=" + d.o2
-            );
+            + "&zip=" + d.zip
+      );
       elem.setAttribute("height", "1");
       elem.setAttribute("width", "1");
       document.body.appendChild(elem);
-    }
-  });
+      }
+    });
 
-  (function() {
-    window.addEventListener('load', function() {
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation')
+    (function() {
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation')
 
-      // Loop over them and prevent submission
-      Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          formSubmit=true;
-          if (form.checkValidity() === false) {
-            event.preventDefault()
-            event.stopPropagation()
-            formSubmit=false;
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-    }, false);
-  }());
+        // Loop over them and prevent submission
+        Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            formSubmit=true;
+            if (form.checkValidity() === false) {
+              event.preventDefault()
+              event.stopPropagation()
+              formSubmit=false;
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+      }, false);
+    }());
 
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
+    function geoFindMe() {
+      const mapLink = document.getElementById('map-link');
+      mapLink.value= "" ;
+      mapLink.placeholder= "Approximate GPS Location to 11 Sq KM" ;
+      mapLink.readOnly = true;
 
-  function geoFindMe() {
+      var geo_options = {
+        enableHighAccuracy: false,
+        maximumAge : 30000,
+        timeout: 5000
+      };
 
-    const status = document.querySelector('#status');
-    const mapLink = document.querySelector('#map-link');
+      function success(position) {
+        // TODO - improve GEO anonymization
+        const latitude = Math.round((position.coords.latitude) * 10) / 10; // bucketize
+        const longitude = Math.round((position.coords.longitude) * 10) / 10;
+        mapLink.value = `${latitude},${longitude}`;
+      }
 
+      function error() {
+        mapLink.placeholder = 'Unable to retrieve your location';
+      }
 
-    var geo_options = {
-      enableHighAccuracy: false,
-      maximumAge: 1e6,
-      timeout: 5000
-    };
+      if (!navigator.geolocation) {
+        mapLink.placeholder = 'Geolocation is not supported by your browser';
+      } else {
+        mapLink.placeholder = 'Locating…';
+        navigator.geolocation.getCurrentPosition(success, error, geo_options);
+      }
 
-    function success(position) {
-      // TODO - improve GEO anonymization
-      var r1 = getRandomInt(-5, 5) / 100; // jitter
-      var r2 = getRandomInt(-5, 5) / 100;
-      const latitude = Math.round((position.coords.latitude + r1) * 10) / 10; // bucketize
-      const longitude = Math.round((position.coords.longitude + r2) * 10) / 10;
-
-      mapLink.value = `${latitude},${longitude}`;
-    }
-
-    function error() {
-      mapLink.placeholder = 'Unable to retrieve your location';
-    }
-
-    if (!navigator.geolocation) {
-      status.textContent = 'Geolocation is not supported by your browser';
-    } else {
-      mapLink.placeholder = 'Locating…';
-      navigator.geolocation.getCurrentPosition(success, error, geo_options);
     }
 
-  }
+    function sendZip() {
+      var input = document.getElementById('map-link')
+      input.value= "" ;
+      input.placeholder= "Enter ZIP" ;
+      input.readOnly = false;
+    //  debugger;
+
+
+    }
 </script>
 </head>
 
@@ -120,13 +125,21 @@
         <div class="row">
 
           <div class="input-group col-md-auto mb-3">
+            <label class="input-group" for="map-link">Location Info:</label>
             <div class="input-group-prepend">
-              <div class="input-group-text" id="find-me">📌</div>
+              <label class="btn btn-primary">
+                <input type="radio" class="input-group-text" id="find-me" name="find-me" style="display:inline-block">📌</input>
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" class="input-group-text" id="use-zip" name="find-me" style="display:inline-block">ZIP</input>
+              </label>
             </div>
-            <input type="text" class="form-control" id="map-link" placeholder="Approximate Location" value="" readonly>
+                <input type="text" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" readonly>
+                <small class="form-text text-muted input-group">Location limited to 11 KM² accuracy.</small>
           </div>
 
           <div class="input-group col-md-auto mb-3">
+            <label class="input-group" for="temp">Body Temperature:</label>
             <div class="input-group-prepend">
               <label class="btn btn-primary">
                 <input id="uom-f" type="radio" name="uom" checked>F°</input>
@@ -135,7 +148,7 @@
                 <input type="radio" name="uom">C°</input>
               </label>
             </div>
-            <input type="text" class="form-control" placeholder="Temperature" id="temp" required>
+            <input type="text" class="form-control" placeholder="Enter Degree..." id="temp" required>
             <div class="invalid-feedback">
               Valid temperature is required.
             </div>
@@ -143,17 +156,8 @@
         </div>
         <div class="row">
 
-          <div class="col-md-auto mb-3">
-            <input type="text" class="form-control" id="heartrate" placeholder="*Heart Rate in BPM" value="">
-          </div>
-          <div class="col-md-auto mb-3">
-            <input type="text" class="form-control" id="o2" placeholder="*O2 Saturation" value="">
-          </div>
-
         </div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Agree to Terms and Submit</button>
-          <hr class="mb-4">
-
+          <button class="btn btn-primary btn-lg btn-block mb-4" type="submit">Agree to Terms and Submit</button>
           <div class="text-center">
             <p><a href="https://www.termsfeed.com/terms-conditions/30ce29fdd25da9246070a2632da0af8d">Terms of Service</a></p>
           </div>
@@ -162,7 +166,7 @@
 
     <hr class="mb-4">
     <div class="py4 text-center">
-      <p class="d-none d-sm-block">This open source project will soon encourage pull requests. We're looking for sponsorship to manage CDN and Load Balancing costs.</p>
+      <p class="d-none d-sm-block">This open source project encourages pull requests. We're looking for sponsorship to manage CDN and Load Balancing costs.</p>
       <p class="d-none d-sm-block">This data will be publically available in BigQuery. We use an architecture inspired by this serverless pixel service:</p>
       <p class="d-none d-sm-block"><a target="_blank" href="https://cloud.google.com/solutions/serverless-pixel-tracking">https://cloud.google.com/solutions/serverless-pixel-tracking</a></p>
     </div>
@@ -170,12 +174,14 @@
   </div>
 
   <footer class="my-5 pt-5 text-muted text-center text-small">
-    <ul class="list-inline">
-      <li class="list-inline-item">2020 | <a href="https://github.com/iampatgrady/trackpandemics">contribute on github</a></li>
+    <ul class="list-unstyled">
+      <li class="list-item"><a href="https://github.com/iampatgrady/trackpandemics">contribute on github</a></li>
+      <li class="list-item">2020 | by Pat Grady</li>
     </ul>
   </footer>
   <script>
     document.querySelector('#find-me').addEventListener('click', geoFindMe);
+    document.querySelector('#use-zip').addEventListener('click', sendZip);
   </script>
 
 </body>
