@@ -91,6 +91,8 @@
 
       if (!navigator.geolocation) {
         mapLink.placeholder = 'Geolocation is not supported by your browser';
+        mapLink.value= "" ;
+        mapLink.readOnly = false;
       } else {
         mapLink.placeholder = 'Locating…';
         navigator.geolocation.getCurrentPosition(success, error, geo_options);
@@ -131,14 +133,14 @@
                 <input type="radio" class="input-group-text" id="find-me" name="find-me" style="display:inline-block">📌</input>
               </label>
               <label class="btn btn-primary">
-                <input type="radio" class="input-group-text" id="use-zip" name="find-me" style="display:inline-block">ZIP</input>
+                <input type="radio" class="input-group-text" id="use-zip" name="find-me" style="display:inline-block"  onclick="javascript:document.getElementById('map-link').focus()">ZIP</input>
               </label>
             </div>
                 <input type="text" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" readonly>
                 <small class="form-text text-muted input-group">Location limited to 11 KM² accuracy.</small>
           </div>
 
-          <div class="input-group col-md-auto mb-3">
+          <div class="input-group col-md-auto mb-3"   onclick="javascript:document.getElementById('temp').focus()">
             <label class="input-group" for="temp">Body Temperature:</label>
             <div class="input-group-prepend">
               <label class="btn btn-primary">
