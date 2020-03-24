@@ -41,9 +41,9 @@ The data is warehoused using [Google Cloud BigQuery](https://cloud.google.com/bi
 
 ### Accessing Public Data:
  - You must have a Google Account
- - Visit
-  - [https://console.cloud.google.com/bigquery?p=pandemic-tracker](https://console.cloud.google.com/bigquery?p=pandemic-tracker&d=public&t=hourly_export&page=table)
-  - First time users:
+ - Visit:
+    - [https://console.cloud.google.com/bigquery?p=pandemic-tracker](https://console.cloud.google.com/bigquery?p=pandemic-tracker&d=public&t=hourly_export&page=table)
+ - First-time users:
     - Agree to terms
     - Create a project
  - Pin `pandemic-tracker` project for future reference
