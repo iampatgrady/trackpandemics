@@ -136,7 +136,7 @@
                 <input type="radio" class="input-group-text" id="use-zip" name="find-me" style="display:inline-block"  onclick="javascript:document.getElementById('map-link').focus()">ZIP</input>
               </label>
             </div>
-                <input type="numeric" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" pattern="\d{5}(-\d{4})*" readonly>
+                <input type="text" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" pattern="\d{5}" inputmode="numeric" readonly>
                 <small class="form-text text-muted input-group">Location limited to 11 KM² accuracy.</small>
           </div>
 
@@ -150,7 +150,7 @@
                 <input type="radio" name="uom">C°</input>
               </label>
             </div>
-            <input type="number" class="form-control" placeholder="Enter Degree..." id="temp" pattern="\d*(\.\d*)*" required>
+            <input type="text" class="form-control" placeholder="Enter Degree..." id="temp" pattern="\d*(\.\d*)*" inputmode="decimal" required>
             <div class="invalid-feedback">
               Valid temperature is required.
             </div>
