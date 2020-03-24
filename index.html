@@ -28,7 +28,7 @@
         d.location = "";
         d.zip = mapValue;
       }
-      d.uom = document.getElementById('uom-f').checked;
+      d.unit = document.getElementById('uom-f').checked;
       d.temp = document.getElementById('temp').value;
 
       var elem = document.createElement("img");
@@ -135,7 +135,7 @@
                 <input type="radio" class="input-group-text" id="use-zip" name="find-me" style="display:inline-block"  onclick="javascript:document.getElementById('map-link').focus()">ZIP</input>
               </label>
             </div>
-                <input type="text" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" pattern="\d{5}" inputmode="numeric" readonly>
+                <input type="text" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" pattern="\d{5}" inputmode="numeric" readonly required>
                 <small class="form-text text-muted input-group">Location limited to ~ 11 km² accuracy.</small>
           </div>
 
