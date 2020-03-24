@@ -1,3 +1,5 @@
 steps:
 - name: gcr.io/cloud-builders/gsutil
   args: ['-m','cp', '*.*', 'gs://pandemic-tracker']
+- name: gcr.io/cloud-builders/gsutil
+  args: ['web', 'set', '-m', 'index.html', '-e', '404.html'] gs://pandemic-tracker
