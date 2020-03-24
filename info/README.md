@@ -16,10 +16,10 @@ The endpoint that receives data is https://www.trackpandemics.com/p.gif
 The following demonstrates how to construct a submission-pixel with the appropriate URI parameters:
   ```javascript
   var url = "https://www.trackpandemics.com/p.gif?"
-          + "loc=" + data.gps     // STRING   "lat,long"
-          + "&uom=" + data.uom    // BOOLEAN  true
-          + "&temp=" + data.temp  // DECIMAL  98.6
-          + "&zip=" + data.zip;   // STRING   "06001"
+          + "loc=" + data.gps       // STRING   "lat,long"  - location
+          + "&unit=" + data.unit    // BOOLEAN  true        - isFahrenheit
+          + "&temp=" + data.temp    // DECIMAL  98.6        - temperature
+          + "&zip=" + data.zip;     // STRING   "06001"     - zipcode
   ```
 ## Data Collection
 This project uses a serverless collection architecture following this pattern:  
@@ -39,11 +39,11 @@ The data is warehoused using [Google Cloud BigQuery](https://cloud.google.com/bi
     - Create a project
  - Pin `pandemic-tracker` project for future reference
  - Select `pandemic-tracker:public.hourly_export` then `QUERY TABLE` using:
-```sql
-SELECT SAFE_CAST(temperature as NUMERIC) as temp
-FROM `pandemic-tracker.public.hourly_export`
-WHERE DATE(timestamp) = "2020-03-23" LIMIT 10
-```
+  ```sql
+  SELECT SAFE_CAST(temperature as NUMERIC) as temp
+  FROM `pandemic-tracker.public.hourly_export`
+  WHERE DATE(timestamp) = "2020-03-23" LIMIT 10
+  ```
 
 ## Authors & Contributors
   - Project Leads:
