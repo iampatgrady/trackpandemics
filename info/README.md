@@ -2,10 +2,10 @@
 [https://www.trackpandemics.com](https://www.trackpandemics.com)
 
 ## Project Overview
-This project was created by Pat Grady and is currently seeking contributors. All ideas and feedback are welcome!  
+This project collects anonymized data for use in pandemic research. Additionally, we hope this data can be used to inform institutions and 1st-responders. Finally, this project intends to demonstrate that real-time data collection at a global scale is a solved problem. 
 
 ## Making Submissions
-Submit vitals for each member of your household. Ideally, this would happen daily for each participant. The more data we collect the more information the statistics will reveal. Do not be shy, take your temperature and submit a reading today!  ...and tomorrow :-)
+Submit vitals for each member of your household. Ideally, this would happen daily for each participant. The more data we collect the more information the statistics will reveal. Do not be shy, take your temperature and submit a reading today!
 
 ### Batch Submissions:
 Will soon have support for batch submissions, including loading historical data. TODO - project looking for help on coordinating existing hardware oriented solutions.
@@ -51,3 +51,9 @@ SELECT SAFE_CAST(temperature as NUMERIC) as temp
 FROM `pandemic-tracker.public.hourly_export`
 WHERE DATE(timestamp) = "2020-03-23" LIMIT 10
 ```
+
+## Authors & Contributors
+  - Project Leads:
+    - Pat Grady - pat.grady@adswerve.com
+  - Contributors:
+    - \<your name here>
