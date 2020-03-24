@@ -2,13 +2,14 @@
 This project supports pandemic research by warehousing anonymized vitals.  
 
 ## Plan
-Make it easy to capture data in real time.
+Make it easy to capture data in real time:
+https://www.trackpandemics.com  
 
-This data will be publicly available in BigQuery.  
+The data is publicly available in BigQuery:
+[https://console.cloud.google.com/bigquery?p=pandemic-tracker](https://console.cloud.google.com/bigquery?p=pandemic-tracker&d=public&t=hourly_export&page=table)  
 
-We use an architecture inspired by this serverless pixel service:  
-
-https://cloud.google.com/solutions/serverless-pixel-tracking
+Inspired by this serverless pixel service:  
+https://cloud.google.com/solutions/serverless-pixel-tracking  
 
 ## Contribute
 I'm new to open source and looking for guidance. Submit your PRs and I'll do my best to keep up.

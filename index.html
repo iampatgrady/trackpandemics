@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Collect and warehouse vitals to inform pandemic response strategy.">
@@ -35,10 +34,10 @@
       var elem = document.createElement("img");
       elem.setAttribute("src",
             "https://www.trackpandemics.com/p.gif?"
-            + "loc=" + d.location
-            + "&uom=" + d.uom
-            + "&temp=" + d.temp
-            + "&zip=" + d.zip
+            + "loc=" + d.location   // STRING   "lat,long"  - location
+            + "&unit=" + d.unit     // BOOL     true        - isFahrenheit
+            + "&temp=" + d.temp     // NUMERIC  98.6        - temperature
+            + "&zip=" + d.zip       // STRING   "06101"     - zipcode
       );
       elem.setAttribute("height", "1");
       elem.setAttribute("width", "1");
