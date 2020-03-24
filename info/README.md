@@ -2,10 +2,10 @@
 [https://www.trackpandemics.com](https://www.trackpandemics.com)
 
 ## Project Overview
-This project collects anonymized data for use in pandemic research. Additionally, we hope this data can be used to inform institutions and 1st-responders. Finally, this project intends to demonstrate that real-time data collection at a global scale is a solved problem. 
+This project collects anonymized data for use in pandemic research. Additionally, we hope this data can be used to inform institutions and first-responders. Finally, this project intends to demonstrate that real-time data collection at a global scale is a solved problem.
 
 ## Making Submissions
-Submit vitals for each member of your household. Ideally, this would happen daily for each participant. The more data we collect the more information the statistics will reveal. Do not be shy, take your temperature and submit a reading today!
+Submit vitals for each member of your household. Ideally, this would happen daily for each participant. The more data we collect the more information the statistics will reveal. Do not be shy, take your temperature [**and submit a reading**](https://www.trackpandemics.com) today!
 
 ### Batch Submissions:
 Will soon have support for batch submissions, including loading historical data. TODO - project looking for help on coordinating existing hardware oriented solutions.

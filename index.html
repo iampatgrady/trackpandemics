@@ -103,7 +103,7 @@
     function sendZip() {
       var input = document.getElementById('map-link')
       input.value= "" ;
-      input.placeholder= "Enter ZIP" ;
+      input.placeholder= "Enter ZIP..." ;
       input.readOnly = false;
     //  debugger;
 
@@ -137,7 +137,7 @@
               </label>
             </div>
                 <input type="text" class="form-control" id="map-link" placeholder="Click Pin or Zip" value="" pattern="\d{5}" inputmode="numeric" readonly>
-                <small class="form-text text-muted input-group">Location limited to 11 KM² accuracy.</small>
+                <small class="form-text text-muted input-group">Location limited to ~ 11 km² accuracy.</small>
           </div>
 
           <div class="input-group col-md-auto mb-3"   onclick="javascript:document.getElementById('temp').focus()">
