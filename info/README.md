@@ -15,7 +15,7 @@ The endpoint that receives data is https://www.trackpandemics.com/p.gif
 
 This endpoint [has a logs router](https://cloud.google.com/logging/docs/routing/overview) connected to a BigQuery sink.  
 
-The following demonstrates how to construct a submission-pixel with the appropriate URI parameters: 
+The following demonstrates how to construct a submission-pixel with the appropriate URI parameters:
   ```javascript
   var elem = document.createElement("img");
   elem.setAttribute("src",
@@ -41,7 +41,8 @@ The data is warehoused using [Google Cloud BigQuery](https://cloud.google.com/bi
 
 ### Accessing Public Data:
  - You must have a Google Account
- - Visit https://console.cloud.google.com/bigquery?p=pandemic-tracker&d=public&t=hourly_export&page=table
+ - Visit
+  - [https://console.cloud.google.com/bigquery?p=pandemic-tracker](https://console.cloud.google.com/bigquery?p=pandemic-tracker&d=public&t=hourly_export&page=table)
   - First time users:
     - Agree to terms
     - Create a project
